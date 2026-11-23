@@ -1,0 +1,92 @@
+name: GitHub Actions Context Explorer
+run-name: ${{ github.actor }}
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Step 1: Explore Workflow Trigger
+      - run: |
+          echo "The job was automatically triggered by a ${{ github.event_name }} event"
+
+      # Step 2: Explore Runner
+      - run: |
+          echo "This job is running on a ${{ runner.os }} server"
+          echo "Runner architecture: ${{ runner.arch }}"
+
+      # Step 3: Explore Branch
+      - run: |
+          echo "Branch reference: ${{ github.ref }}"
+          echo "Branch name: ${{ github.ref_name }}"
+          echo "Reference type: ${{ github.ref_type }}"
+
+      # Step 4: Explore User Information
+      - run: |
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Actor ID: ${{ github.actor_id }}"
+          echo "Triggering actor: ${{ github.triggering_actor }}"
+
+      # Step 5: Checkout Repository Code
+      - name: Checkout repository code
+        uses: actions/checkout@v5
+
+      # Step 6: Explore Repository Information
+      - run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Repository owner: ${{ github.repository_owner }}"
+          echo "Repository ID: ${{ github.repository_id }}"
+          echo "Repository URL: ${{ github.repositoryUrl }}"
+
+      # Step 7: Explore Commit Information
+      - run: |
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Workflow SHA: ${{ github.workflow_sha }}"
+
+      # Step 8: Explore Workflow Information
+      - run: |
+          echo "Workflow name: ${{ github.workflow }}"
+          echo "Workflow reference: ${{ github.workflow_ref }}"
+          echo "Job ID: ${{ github.job }}"
+
+      # Step 9: Explore Run Information
+      - run: |
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Run number: ${{ github.run_number }}"
+          echo "Run attempt: ${{ github.run_attempt }}"
+          echo "Retention days: ${{ github.retention_days }}"
+
+      # Step 10: Explore GitHub URLs
+      - run: |
+          echo "GitHub Server URL: ${{ github.server_url }}"
+          echo "GitHub API URL: ${{ github.api_url }}"
+          echo "GitHub GraphQL URL: ${{ github.graphql_url }}"
+
+      # Step 11: Explore Environment Information
+      - run: |
+          echo "Workspace: ${{ github.workspace }}"
+          echo "Environment file: ${{ github.env }}"
+          echo "Path file: ${{ github.path }}"
+          echo "Event payload path: ${{ github.event_path }}"
+
+      # Step 12: Explore Event Information
+      - name: Display Event Information
+        env:
+          EVENT_DATA: ${{ toJSON(github.event) }}
+        run: |
+          echo "Event details:"
+          echo "$EVENT_DATA"
+
+      # Step 13: List Repository Files
+      - name: List files in the repository
+        run: |
+          echo "Files available in the repository:"
+          ls -la
+          echo "Repository workspace: ${{ github.workspace }}"
+
+      # Step 14: Check Branch Protection
+      - run: |
+          echo "Branch protected: ${{ github.ref_protected }}"
+          echo "Repository owner ID: ${{ github.repository_owner_id }}"
+          echo "Secret source: ${{ github.secret_source }}"
